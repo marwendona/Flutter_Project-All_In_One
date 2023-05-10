@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "992386469400",
+    "project_id": "voyage2-a44a4",
+    "storage_bucket": "voyage2-a44a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992386469400:android:99b327995aac8341f7bd6d",
+        "android_client_info": {
+          "package_name": "com.example.voyage2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992386469400-d881q1j5lupd3tlltnq8b91v2qnhmhmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA5Zj71iNe29SLRCsVgVQEG205_LDdAMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992386469400-d881q1j5lupd3tlltnq8b91v2qnhmhmc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
