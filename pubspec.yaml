@@ -43,6 +43,7 @@ dependencies:
   snippet_coder_utils:
   firebase_core:
   firebase_auth:
+  firebase_database:
 
 dev_dependencies:
   flutter_test:

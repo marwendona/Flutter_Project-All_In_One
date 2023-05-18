@@ -10,16 +10,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voyage2/pages/meteo.page.dart';
 import 'package:voyage2/pages/parametres.page.dart';
 import 'package:voyage2/pages/pays.page.dart';
+import 'config/global.params.dart';
 import 'firebase_options.dart';
+import 'package:voyage2/config/global.params.dart';
 
-void main() => runApp(MyApp());
-/*Future<void> main() async{
+ThemeData theme = ThemeData.light();
+
+//void main() => runApp(MyApp());
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  GlobalParams.themeActuel.setMode(await _onGetMode());
   runApp(MyApp());
-}*/
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final routes = {
     '/home': (context) => HomePage(),
     '/inscription': (context) => InscriptionPage(),
@@ -32,34 +42,38 @@ class MyApp extends StatelessWidget {
   };
 
   @override
+  void initState() {
+    super.initState();
+    GlobalParams.themeActuel.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: GlobalParams.themeActuel.getTheme(),
       debugShowCheckedModeBanner: false,
       routes: routes,
-      home: FutureBuilder(
-          future: SharedPreferences.getInstance(),
-          builder:(BuildContext context ,AsyncSnapshot<SharedPreferences> prefs){
-            var x=prefs.data;
-            if(prefs.hasData){
-              bool conn =x?.getBool('connect') ?? false;
-              if(conn)
-                return HomePage();
-            }
-            return AuthentificationPage();
-          }
-      ),
-      /*
       home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return HomePage();
-          } else {
-            return AuthentificationPage();
-          }
-        },
-      ),
-       */
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData)
+              return HomePage();
+            else
+              return AuthentificationPage();
+          }),
     );
   }
+}
+
+Future<String> _onGetMode() async {
+  final snapshot = await ref.child("mode").get();
+  if (snapshot.exists) {
+    snapshot.value.toString();
+  } else {
+    mode = "Jour";
+  }
+  print(mode);
+  return mode;
 }

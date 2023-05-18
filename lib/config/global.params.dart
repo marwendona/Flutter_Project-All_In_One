@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import '../notifier/theme.dart';
 
 class GlobalParams {
+  static MonTheme themeActuel = MonTheme();
   static List<Map<String, dynamic>> menus = [
     {
       "title": "Accueil",
       "icon": const Icon(
         Icons.home,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/home"
     },
     {
-      "title": "Météo",
+      "title": "Méteo",
       "icon": const Icon(
         Icons.sunny_snowing,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/meteo"
     },
@@ -22,7 +24,7 @@ class GlobalParams {
       "title": "Gallerie",
       "icon": const Icon(
         Icons.photo,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/gallerie"
     },
@@ -30,7 +32,7 @@ class GlobalParams {
       "title": "Pays",
       "icon": const Icon(
         Icons.location_city,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/pays"
     },
@@ -38,62 +40,61 @@ class GlobalParams {
       "title": "Contact",
       "icon": const Icon(
         Icons.contact_page,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/contact"
     },
     {
-      "title": "Paramétres",
+      "title": "Paraméters",
       "icon": const Icon(
         Icons.settings,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/parametres"
     },
     {
-      "title": "Déconnexicon",
+      "title": "Deconnexion",
       "icon": const Icon(
         Icons.logout,
-        color: Colors.teal,
+        color: Colors.deepPurpleAccent,
       ),
       "route": "/authentification"
     },
   ];
-
-  static List<Map<String, dynamic>> accueil = [
+  static List<Map<String, dynamic>> acceuil = [
     {
       "image": const AssetImage(
-        'images/meteo.png',
+        "images/meteo.png",
       ),
       "route": "/meteo"
     },
     {
       "image": const AssetImage(
-        'images/gallerie.png',
+        "images/gallerie.png",
       ),
       "route": "/gallerie"
     },
     {
       "image": const AssetImage(
-        'images/pays.png',
+        "images/pays.png",
       ),
       "route": "/pays"
     },
     {
       "image": const AssetImage(
-        'images/contact.png',
+        "images/contact.png",
       ),
       "route": "/contact"
     },
     {
       "image": const AssetImage(
-        'images/parametres.png',
+        "images/parametres.png",
       ),
       "route": "/parametres"
     },
     {
       "image": const AssetImage(
-        'images/deconnexion.png',
+        "images/deconnexion.png",
       ),
       "route": "/authentification"
     },

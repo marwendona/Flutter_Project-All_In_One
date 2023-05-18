@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,129 +19,90 @@ class InscriptionPage extends StatelessWidget {
             Navigator.pushNamed(context, '/authentification');
           },
         ),
-        title: const Text(
-          'Page Inscription',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
+      ),
+      body: Column(children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            onTap: () {},
+            controller: txt_login,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                    borderRadius: BorderRadius.circular(30)),
+                prefixIcon: Icon(Icons.person, color: Colors.teal[300]),
+                hintText: "Utilisateur",
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1),
+                    borderRadius: BorderRadius.circular(30))),
           ),
         ),
-        centerTitle: true,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/background.jfif"),
-            fit: BoxFit.cover,
+        Container(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            obscureText: true,
+            controller: txt_password,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                    borderRadius: BorderRadius.circular(30)),
+                prefixIcon:
+                    Icon(Icons.lock_open, color: Colors.teal[300]),
+                hintText: "Mot de passe",
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1),
+                    borderRadius: BorderRadius.circular(30))),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                controller: txt_login,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.white),
-                  hintText: "Nom d'utilisateur",
-                  hintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
+              backgroundColor: Colors.teal,
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                obscureText: true,
-                controller: txt_password,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                  hintText: "Mot de passe",
-                  hintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
+            onPressed: () {
+              _onInscrire(context);
+            },
+            child: Text(
+              "Inscription",
+              style: TextStyle(fontSize: 22),
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                onPressed: () {
-                  _onInscrire(context);
-                  //createUserWithEmailAndPassword(txt_login as String, txt_password as String);
-                },
-                child: const Text(
-                  'Inscription',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            TextButton(
-              child: const Text(
-                "J'ai déjà un compte",
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/authentification');
-              },
-            ),
-            Image.network(
-              "https://www.mjcroguet.fr/wp-content/uploads/sites/106/2018/05/bouton-300x103.jpg",
-            ),
-          ],
+          ),
         ),
-      ),
+        TextButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.login,
+                  color: Colors.teal,
+                ),
+                Text(" Compte Existant",
+                    style: TextStyle(color: Colors.teal, fontSize: 22)),
+              ],
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/authentification");
+            }),
+      ]),
     );
   }
+
   Future<void> _onInscrire(BuildContext context) async {
     prefs = await SharedPreferences.getInstance();
-    if (!txt_login.text.isEmpty && !txt_password.text.isEmpty) {
+    if (txt_login.text.isNotEmpty && txt_password.text.isNotEmpty) {
       prefs.setString("login", txt_login.text);
       prefs.setString("password", txt_password.text);
       prefs.setBool("connecte", true);
       Navigator.pop(context);
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, "/home");
     } else {
       const snackBar = SnackBar(
-        content: Text('Id ou mot de passe vides'),
+        content: Text("Id ou mot de passe vides"),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
-  /*
-  Future<void> createUserWithEmailAndPassword(String emailAddress, String password) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-   */
 }

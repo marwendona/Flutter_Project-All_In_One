@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
         Center(
           child: Wrap(
             children: [
-              ...(GlobalParams.accueil as List).map((item) {
+              ...(GlobalParams.acceuil as List).map((item) {
                 return InkWell(
                   child: Ink.image(
                     height: 180,

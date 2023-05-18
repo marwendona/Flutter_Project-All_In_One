@@ -1,121 +1,116 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthentificationPage extends StatelessWidget {
   late SharedPreferences prefs;
-  TextEditingController txt_login = TextEditingController();
-  TextEditingController txt_password = TextEditingController();
+  TextEditingController txt_login = new TextEditingController();
+  TextEditingController txt_password = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Page Authentification',
-            style: TextStyle(color: Colors.white, fontSize: 24)),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.teal,
+        elevation: 0.0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("images/background.jfif"),
-            fit: BoxFit.cover,
+      body: Column(children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            onTap: () {},
+            controller: txt_login,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                    borderRadius: BorderRadius.circular(30)),
+                prefixIcon: Icon(Icons.person, color: Colors.teal[300]),
+                hintText: "Utilisateur",
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1),
+                    borderRadius: BorderRadius.circular(30))),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                controller: txt_login,
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.white),
-                  hintText: "Nom d'utilisateur",
-                  hintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                obscureText: true,
-                controller: txt_password,
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                  hintText: "Mot de passe",
-                  hintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  minimumSize: const Size.fromHeight(50),
-                ),
-                onPressed: () {
-                  _onAuthentifier(context);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.login, size: 28, color: Colors.white),
-                    SizedBox(width: 10),
-                    Text('Se connecter',
-                        style: TextStyle(fontSize: 22, color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.person_add, size: 24, color: Colors.white),
-                  SizedBox(width: 10),
-                  Text("Nouvel utilisateur",
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ],
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/inscription');
-              },
-            ),
-          ],
+        Container(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            obscureText: true,
+            controller: txt_password,
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.teal),
+                    borderRadius: BorderRadius.circular(30)),
+                focusColor: Colors.teal,
+                prefixIcon:
+                    Icon(Icons.lock_open, color: Colors.teal[300]),
+                hintText: "Mot de passe",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1),
+                  borderRadius: BorderRadius.circular(30),
+                )),
+          ),
         ),
-      ),
+        Container(
+          padding: EdgeInsets.all(10),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
+              backgroundColor: Colors.teal,
+            ),
+            onPressed: () {
+              _onAuthentifier(context);
+            },
+            child: Text(
+              "Connexion",
+              style: TextStyle(fontSize: 22),
+            ),
+          ),
+        ),
+        TextButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.control_point,
+                  color: Colors.teal,
+                ),
+                Text(" Nouvel Utilisateur",
+                    style: TextStyle(color: Colors.teal, fontSize: 22)),
+              ],
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/inscription");
+            })
+      ]),
     );
   }
 
   Future<void> _onAuthentifier(BuildContext context) async {
-    prefs = await SharedPreferences.getInstance();
-    String log = prefs.getString("login") ?? '';
-    String psw = prefs.getString("password") ?? '';
-    print(txt_password.text);
-    if (txt_login.text == log && txt_password.text == psw) {
-      prefs.setBool("connecte", true);
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: txt_login.text.trim(), password: txt_password.text);
       Navigator.pop(context);
       Navigator.pushNamed(context, '/home');
-    } else {
-      const snackBar = SnackBar(
-        content: Text('Vérifiez votre nom d\'utilisateur et votre mot de passe',
-            style: TextStyle(fontSize: 18)),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        const snackBar = SnackBar(
+          content: Text('Utilisateur inexistant.'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (e.code == 'wrong-password') {
+        const snackBar = SnackBar(
+          content: Text('Verifiez votre mot de passe.'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
   }
 }
