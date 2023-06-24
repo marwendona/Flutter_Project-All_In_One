@@ -1,16 +1,32 @@
-# voyage2
+# All_In_One
 
-A new Flutter project.
+## Description
+All_In_One is a versatile application that combines multiple functionalities to provide a comprehensive user experience. It offers a contact management system, weather information, and country exploration features, all within a single app.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+### Contact Management
+- Add, edit, and delete contacts
+- View contact details, including name, phone number, email, and address
+- Search for specific contacts
 
-A few resources to get you started if this is your first Flutter project:
+### Weather Functionality
+- Get real-time weather information
+- Display current weather conditions, such as temperature, humidity, wind speed, and precipitation
+- View hourly and daily weather forecasts
+- Search for weather by location or GPS coordinates
+- Support for multiple locations
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
+- Flutter (framework for building cross-platform apps)
+- C++ (for performance optimization)
+- Dart (programming language for building Flutter apps)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Install the required dependencies: `flutter pub get`
+4. Run the application: `flutter run`
+
+## Contributors
+Contributions to All_In_One are welcome! If you encounter any bugs, have suggestions for improvements, or would like to add new features, please feel free to open an issue or submit a pull request. Ensure that you follow the project's code of conduct and guidelines.
